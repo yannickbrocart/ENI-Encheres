@@ -7,7 +7,7 @@
 		type="javax.sql.DataSource"
 		
 		url="jdbc:sqlserver://localhost;databasename=TROCENCHERES_DB"
-		username="user"
+		username="user_trocencheres"
 		password="Pa$$w0rd"
 		
 		maxTotal="100"
