@@ -6,7 +6,7 @@
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		type="javax.sql.DataSource"
 		
-		url="jdbc:sqlserver://localhost;databasename=TROCENCHERES_DB"
+		url="jdbc:sqlserver://localhost:1433;databasename=TROCENCHERES_DB"
 		username="user_trocencheres"
 		password="Pa$$w0rd"
 		

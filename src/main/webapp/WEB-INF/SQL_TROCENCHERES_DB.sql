@@ -24,7 +24,6 @@ CREATE TABLE ENCHERES (
 
 CREATE TABLE UTILISATEURS (
     no_utilisateur			INTEGER IDENTITY(1,1) NOT NULL,
-	etat_utilisateur		BIT NOT NULL,
     pseudo					VARCHAR(30) NOT NULL,
     nom						VARCHAR(30) NOT NULL,
     prenom					VARCHAR(30) NOT NULL,
@@ -36,6 +35,8 @@ CREATE TABLE UTILISATEURS (
     mot_de_passe			VARCHAR(64) NOT NULL,
     credit					INTEGER NOT NULL,
     administrateur			BIT NOT NULL,
+	utilisateur_desactive	BIT NOT NULL,
+	utilisateur_supprime	BIT NOT NULL,
 	CONSTRAINT utilisateur_pk PRIMARY KEY (no_utilisateur),
 	CONSTRAINT utilisateur_pseudo_un UNIQUE (pseudo),
 	CONSTRAINT utilisateur_email_un UNIQUE (email)
@@ -49,9 +50,10 @@ CREATE TABLE ARTICLES_VENDUS (
     date_fin_encheres		DATE NOT NULL,
     prix_initial			INTEGER,
     prix_vente				INTEGER,
-	etat_article			BIT,
+	vente_active			BIT NOT NULL,
     no_utilisateur			INTEGER NOT NULL,
     no_categorie			INTEGER NOT NULL,
+	article_supprime		BIT NOT NULL,
 	CONSTRAINT articles_vendus_pk PRIMARY KEY (no_article)
 )
 
