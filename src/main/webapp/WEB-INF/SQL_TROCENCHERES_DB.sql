@@ -54,6 +54,7 @@ CREATE TABLE ARTICLES_VENDUS (
     no_utilisateur			INTEGER NOT NULL,
     no_categorie			INTEGER NOT NULL,
 	article_supprime		BIT NOT NULL,
+	photo_article			IMAGE,
 	CONSTRAINT articles_vendus_pk PRIMARY KEY (no_article)
 )
 
