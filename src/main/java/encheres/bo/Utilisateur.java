@@ -9,6 +9,7 @@ public class Utilisateur {
 	private String telephone;
 	private String rue;
 	private String codePostal;
+	private String ville;
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
@@ -18,8 +19,27 @@ public class Utilisateur {
 	public Utilisateur() {
 	}
 
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse, boolean administrateur) {
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.motDePasse = motDePasse;
+		this.credit = 0;
+		this.administrateur = administrateur;
+		this.utilisateurDesactive = false;
+		this.utilisateurSupprime = false;
+	}
+
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String motDePasse, boolean administrateur) {
+			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur,
+			boolean utilisateurDesactive, boolean utilisateurSupprime) {
+		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -28,11 +48,12 @@ public class Utilisateur {
 		this.telephone = telephone;
 		this.rue = rue;
 		this.codePostal = codePostal;
+		this.ville = ville;
 		this.motDePasse = motDePasse;
-		this.credit = 0;
+		this.credit = credit;
 		this.administrateur = administrateur;
-		this.utilisateurDesactive = false;
-		this.utilisateurSupprime = false;
+		this.utilisateurDesactive = utilisateurDesactive;
+		this.utilisateurSupprime = utilisateurSupprime;
 	}
 
 	public int getNoUtilisateur() {
@@ -99,6 +120,14 @@ public class Utilisateur {
 		this.codePostal = codePostal;
 	}
 
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
 	public String getMotDePasse() {
 		return motDePasse;
 	}
@@ -143,8 +172,8 @@ public class Utilisateur {
 	public String toString() {
 		return "Utilisateur [noUtilisateur = " + noUtilisateur + ", pseudo = " + pseudo + ", nom = " + nom
 				+ ", prenom = " + prenom + ", email = " + email + ", telephone = " + telephone + ", rue = " + rue
-				+ ", codePostal = " + codePostal + ", motDePasse = " + motDePasse + ", credit = " + credit
-				+ ", administrateur = " + administrateur + ", utilisateurDesactive = " + utilisateurDesactive
+				+ ", codePostal = " + codePostal + ", ville = " + ville + ", motDePasse = " + motDePasse + ", credit = "
+				+ credit + ", administrateur = " + administrateur + ", utilisateurDesactive = " + utilisateurDesactive
 				+ ", utilisateurSupprime = " + utilisateurSupprime + "]";
 	}
 
