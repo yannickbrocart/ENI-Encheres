@@ -12,9 +12,9 @@ public class ArticleVendu {
 	private int miseAPrix;
 	private int prixVente;
 	private boolean venteActive;
-	private int noUtilisateur;
+	private Utilisateur vendeur;
 	private int categorieArticle;
-	private Retrait lieuRetrait;
+	private int noLieuRetrait;
 	private boolean articleSupprime;
 	private byte[] photo;
 
@@ -22,8 +22,8 @@ public class ArticleVendu {
 	}
 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, int noUtilisateur, int categorieArticle,
-			Retrait lieuRetrait, byte[] photo) {
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Utilisateur vendeur, int categorieArticle,
+			int noLieuRetrait, byte[] photo) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -32,9 +32,9 @@ public class ArticleVendu {
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
 		this.venteActive = false;
-		this.noUtilisateur = noUtilisateur;
+		this.vendeur = vendeur;
 		this.categorieArticle = categorieArticle;
-		this.lieuRetrait = lieuRetrait;
+		this.noLieuRetrait = noLieuRetrait;
 		this.articleSupprime = false;
 		this.photo = photo;
 	}
@@ -103,12 +103,12 @@ public class ArticleVendu {
 		this.venteActive = venteActive;
 	}
 
-	public int getNoUtilisateur() {
-		return noUtilisateur;
+	public Utilisateur getVendeur() {
+		return vendeur;
 	}
 
-	public void setNoUtilisateur(int noUtilisateur) {
-		this.noUtilisateur = noUtilisateur;
+	public void setVendeur(Utilisateur vendeur) {
+		this.vendeur = vendeur;
 	}
 
 	public int getCategorieArticle() {
@@ -119,12 +119,12 @@ public class ArticleVendu {
 		this.categorieArticle = categorieArticle;
 	}
 
-	public Retrait getLieuRetrait() {
-		return lieuRetrait;
+	public int getNoLieuRetrait() {
+		return noLieuRetrait;
 	}
 
-	public void setLieuRetrait(Retrait lieuRetrait) {
-		this.lieuRetrait = lieuRetrait;
+	public void setNoLieuRetrait(int noLieuRetrait) {
+		this.noLieuRetrait = noLieuRetrait;
 	}
 
 	public boolean isArticleSupprime() {
@@ -148,8 +148,8 @@ public class ArticleVendu {
 		return "ArticleVendu [noArticle = " + noArticle + ", nomArticle = " + nomArticle + ", description = "
 				+ description + ", dateDebutEncheres = " + dateDebutEncheres + ", dateFinEncheres = " + dateFinEncheres
 				+ ", miseAPrix = " + miseAPrix + ", prixVente = " + prixVente + ", venteActive = " + venteActive
-				+ ", noUtilisateur = " + noUtilisateur + ", categorieArticle = " + categorieArticle + ", lieuRetrait = "
-				+ lieuRetrait + ", articleSupprime = " + articleSupprime + "]";
+				+ ", nomvendeur = " + vendeur.getNom() + ", categorieArticle = " + categorieArticle
+				+ ", noLieuRetrait = " + noLieuRetrait + ", articleSupprime = " + articleSupprime + "]";
 	}
 
 }
