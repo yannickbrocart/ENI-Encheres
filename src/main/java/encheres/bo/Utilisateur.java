@@ -20,7 +20,7 @@ public class Utilisateur {
 	}
 
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String codePostal, String ville, String motDePasse, boolean administrateur) {
+			String codePostal, String ville, String motDePasse) {
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -31,7 +31,7 @@ public class Utilisateur {
 		this.ville = ville;
 		this.motDePasse = motDePasse;
 		this.credit = 0;
-		this.administrateur = administrateur;
+		this.administrateur = false;
 		this.utilisateurDesactive = false;
 		this.utilisateurSupprime = false;
 	}
@@ -39,7 +39,6 @@ public class Utilisateur {
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur,
 			boolean utilisateurDesactive, boolean utilisateurSupprime) {
-		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
 		this.nom = nom;
