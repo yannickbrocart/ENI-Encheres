@@ -31,7 +31,6 @@ public class InscriptionServlet extends HttpServlet {
 		} catch (BusinessException e1) {
 			e1.printStackTrace();
 		}
-		Character.isLetterOrDigit(request.getParameter("pseudo"));
 		Utilisateur utilisateur = new Utilisateur(request.getParameter("pseudo"), request.getParameter("nom"),
 				request.getParameter("prenom"), request.getParameter("email"), request.getParameter("telephone"),
 				request.getParameter("rue"), request.getParameter("codepostal"), request.getParameter("ville"),
