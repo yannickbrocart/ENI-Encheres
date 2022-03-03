@@ -1,13 +1,15 @@
 package encheres.bll;
 
+import java.util.List;
+
 import encheres.BusinessException;
 import encheres.bo.Utilisateur;
+import encheres.dal.DAO;
 import encheres.dal.DAOFactory;
-import encheres.dal.UtilisateurDAO;
 
 public class UtilisateurManager {
 
-	UtilisateurDAO utilisateurDAO;
+	DAO<Utilisateur> utilisateurDAO;
 
 	public UtilisateurManager() {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
@@ -18,19 +20,19 @@ public class UtilisateurManager {
 	}
 
 	public void updateUtilisateur(int identifiant, Utilisateur utilisateur) throws BusinessException {
-		utilisateurDAO.update(identifiant, utilisateur);
-	}
-
-	public void desactivateUtilisateur(int identifiant) throws BusinessException {
-		utilisateurDAO.desactivate(identifiant);
+		utilisateurDAO.update(utilisateur);
 	}
 
 	public void deleteUtilisateur(int identifiant) throws BusinessException {
 		utilisateurDAO.delete(identifiant);
 	}
 
-	public Utilisateur selectUtilisateur(int identifiant) throws BusinessException {
-		return utilisateurDAO.select(identifiant);
+	public Utilisateur selectUtilisateurById(int identifiant) throws BusinessException {
+		return utilisateurDAO.selectById(identifiant);
+	}
+
+	public List<Utilisateur> selectAllUtilisateurs(int identifiant) throws BusinessException {
+		return utilisateurDAO.selectAll();
 	}
 
 }

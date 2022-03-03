@@ -4,26 +4,25 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-import encheres.BusinessException;
 import encheres.bo.Utilisateur;
-import encheres.dal.UtilisateurDAO;
+import encheres.dal.DAO;
 
-public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
+public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur> {
 
 	private static final String INSERT_UTILISATEUR = "INSERT INTO utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,"
 			+ "ville,mot_de_passe,credit,administrateur,utilisateur_desactive,utilisateur_supprime) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,"
-			+ "ville=?,mot_de_passe=? WHERE no_utilisateur=?";
-	private static final String DESACTIVATE_UTILISATEUR = "UPDATE utilisateurs SET utilisateur_desactive=TRUE WHERE no_utilisateur=?";
-	private static final String DELETE_UTILISATEUR = "UPDATE utilisateurs SET utilisateur_supprime=TRUE WHERE no_utilisateur=?";
-	private static final String SELECT_UTILISATEUR = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
-	private static final String SELECT_UTILISATEUR_BY_PASSWORD = "SELECT * FROM utilisateurs WHERE mot_de_passe=?";
+			+ "ville=?,mot_de_passe=?, credit=?,administrateur=?,utilisateur_desactive=?,utilisateur_supprime=? WHERE no_utilisateur=?";
+	private static final String DELETE_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur=?";
+	private static final String SELECT_UTILISATEUR_BY = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
+	private static final String SELECT_ALL_UTILISATEURS = "SELECT * FROM utilisateurs";
 
 	@Override
-	public void insert(Utilisateur utilisateur) throws BusinessException {
+	public void insert(Utilisateur utilisateur) {
 		try (Connection cnx = PoolConnection.getConnection();
-				PreparedStatement pstmt = cnx.prepareStatement(INSERT_UTILISATEUR);) {
+				PreparedStatement pstmt = cnx.prepareStatement(INSERT_UTILISATEUR)) {
 			pstmt.setString(1, utilisateur.getPseudo());
 			pstmt.setString(2, utilisateur.getNom());
 			pstmt.setString(3, utilisateur.getPrenom());
@@ -38,17 +37,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setBoolean(12, utilisateur.isUtilisateurDesactive());
 			pstmt.setBoolean(13, utilisateur.isUtilisateurSupprime());
 			pstmt.executeUpdate();
-			System.out.println("Insertion réussie !");
 		} catch (SQLException e) {
-			// throw business exception
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void update(int identifiant, Utilisateur utilisateur) throws BusinessException {
+	public void update(Utilisateur utilisateur) {
 		try (Connection cnx = PoolConnection.getConnection();
-				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_UTILISATEUR);) {
+				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_UTILISATEUR)) {
 			pstmt.setString(1, utilisateur.getPseudo());
 			pstmt.setString(2, utilisateur.getNom());
 			pstmt.setString(3, utilisateur.getPrenom());
@@ -58,49 +55,25 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setString(7, utilisateur.getCodePostal());
 			pstmt.setString(8, utilisateur.getVille());
 			pstmt.setString(9, utilisateur.getMotDePasse());
+			pstmt.setInt(10, utilisateur.getCredit());
+			pstmt.setBoolean(11, utilisateur.isAdministrateur());
+			pstmt.setBoolean(12, utilisateur.isUtilisateurDesactive());
+			pstmt.setBoolean(13, utilisateur.isUtilisateurSupprime());
 			pstmt.executeUpdate();
-			System.out.println("Mise à jour réussie !");
 		} catch (SQLException e) {
-			// throw business exception
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void desactivate(int identifiant) throws BusinessException {
-		try (Connection cnx = PoolConnection.getConnection();
-				PreparedStatement pstmt = cnx.prepareStatement(DESACTIVATE_UTILISATEUR);) {
-			pstmt.setInt(1, identifiant);
-			pstmt.executeUpdate();
-			System.out.println("Désactivation réussie !");
-		} catch (SQLException e) {
-			// throw business exception
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void delete(int identifiant) throws BusinessException {
-		try (Connection cnx = PoolConnection.getConnection();
-				PreparedStatement pstmt = cnx.prepareStatement(DELETE_UTILISATEUR);) {
-			pstmt.setInt(1, identifiant);
-			pstmt.executeUpdate();
-			System.out.println("Suppression réussie !");
-		} catch (SQLException e) {
-			// throw business exception
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public Utilisateur select(int identifiant) throws BusinessException {
+	public Utilisateur selectById(int identifiant) {
 		Utilisateur utilisateur = null;
 		try (Connection cnx = PoolConnection.getConnection();
-				PreparedStatement pstmt = cnx.prepareStatement(SELECT_UTILISATEUR);) {
+				PreparedStatement pstmt = cnx.prepareStatement(SELECT_UTILISATEUR_BY)) {
 			pstmt.setInt(1, identifiant);
 			ResultSet rs = pstmt.executeQuery();
 			// MAPPING
-			int noUtilisateur = rs.getInt("no_utilisateur");
+			int noUtilisateur = identifiant;
 			String pseudo = rs.getString("pseudo");
 			String nom = rs.getString("nom");
 			String prenom = rs.getString("prenom");
@@ -118,10 +91,26 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					motDePasse, credit, administrateur, utilisateurDesactive, utilisateurSupprime);
 			System.out.println("Lecture réussie !");
 		} catch (SQLException e) {
-			// throw business exception
 			e.printStackTrace();
 		}
 		return utilisateur;
+	}
+
+	@Override
+	public List<Utilisateur> selectAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(int identifiant) {
+		try (Connection cnx = PoolConnection.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_UTILISATEUR)) {
+			pstmt.setInt(1, identifiant);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
