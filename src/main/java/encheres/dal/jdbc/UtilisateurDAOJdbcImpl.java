@@ -18,11 +18,13 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur> {
 	private static final String DELETE_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String SELECT_UTILISATEUR_BY = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String SELECT_ALL_UTILISATEURS = "SELECT * FROM utilisateurs";
+	public Utilisateur monProfilUtilisateur;
 
 	@Override
 	public void insert(Utilisateur utilisateur) {
 		try (Connection cnx = PoolConnection.getConnection();
-				PreparedStatement pstmt = cnx.prepareStatement(INSERT_UTILISATEUR)) {
+				PreparedStatement pstmt = cnx.prepareStatement(INSERT_UTILISATEUR,
+						PreparedStatement.RETURN_GENERATED_KEYS)) {
 			pstmt.setString(1, utilisateur.getPseudo());
 			pstmt.setString(2, utilisateur.getNom());
 			pstmt.setString(3, utilisateur.getPrenom());
@@ -37,6 +39,8 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur> {
 			pstmt.setBoolean(12, utilisateur.isUtilisateurDesactive());
 			pstmt.setBoolean(13, utilisateur.isUtilisateurSupprime());
 			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			monProfilUtilisateur.setNoUtilisateur(rs.getInt(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -59,6 +63,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur> {
 			pstmt.setBoolean(11, utilisateur.isAdministrateur());
 			pstmt.setBoolean(12, utilisateur.isUtilisateurDesactive());
 			pstmt.setBoolean(13, utilisateur.isUtilisateurSupprime());
+			pstmt.setInt(14, utilisateur.getNoUtilisateur());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -74,22 +79,24 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur> {
 			ResultSet rs = pstmt.executeQuery();
 			// MAPPING
 			int noUtilisateur = identifiant;
-			String pseudo = rs.getString("pseudo");
-			String nom = rs.getString("nom");
-			String prenom = rs.getString("prenom");
-			String email = rs.getString("email");
-			String telephone = rs.getString("telephone");
-			String rue = rs.getString("rue");
-			String codePostal = rs.getString("code_postal");
-			String ville = rs.getString("ville");
-			String motDePasse = rs.getString("mot_de_passe");
-			int credit = rs.getInt("credit");
-			boolean administrateur = rs.getBoolean("administrateur");
-			boolean utilisateurDesactive = rs.getBoolean("utilisateur_desactive");
-			boolean utilisateurSupprime = rs.getBoolean("utilisateur_supprime");
-			utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
-					motDePasse, credit, administrateur, utilisateurDesactive, utilisateurSupprime);
-			System.out.println("Lecture réussie !");
+			if (rs.next()) {
+				String pseudo = rs.getString("pseudo");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				String email = rs.getString("email");
+				String telephone = rs.getString("telephone");
+				String rue = rs.getString("rue");
+				String codePostal = rs.getString("code_postal");
+				String ville = rs.getString("ville");
+				String motDePasse = rs.getString("mot_de_passe");
+				int credit = rs.getInt("credit");
+				boolean administrateur = rs.getBoolean("administrateur");
+				boolean utilisateurDesactive = rs.getBoolean("utilisateur_desactive");
+				boolean utilisateurSupprime = rs.getBoolean("utilisateur_supprime");
+				utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal,
+						ville, motDePasse, credit, administrateur, utilisateurDesactive, utilisateurSupprime);
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -105,7 +112,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur> {
 	@Override
 	public void delete(int identifiant) {
 		try (Connection cnx = PoolConnection.getConnection();
-				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_UTILISATEUR)) {
+				PreparedStatement pstmt = cnx.prepareStatement(DELETE_UTILISATEUR)) {
 			pstmt.setInt(1, identifiant);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
