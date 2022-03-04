@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import encheres.BusinessException;
 import encheres.bo.Utilisateur;
-import encheres.dal.DAO;
+import encheres.dal.DAOUtilisateur;
 
-public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur> {
+public class UtilisateurDAOJdbcImpl implements DAOUtilisateur {
 
 	private static final String INSERT_UTILISATEUR = "INSERT INTO utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,"
 			+ "ville,mot_de_passe,credit,administrateur,utilisateur_desactive,utilisateur_supprime) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -18,6 +19,7 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur> {
 	private static final String DELETE_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String SELECT_UTILISATEUR_BY = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String SELECT_ALL_UTILISATEURS = "SELECT * FROM utilisateurs";
+	private static final String SELECT_UTILISATEUR_BY_CONNEXION = "SELECT * FROM utilisateurs WHERE mot_de_passe=? and (pseudo=? OR email=?)";
 	public Utilisateur monProfilUtilisateur;
 
 	@Override
@@ -96,7 +98,6 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur> {
 				utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal,
 						ville, motDePasse, credit, administrateur, utilisateurDesactive, utilisateurSupprime);
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -118,6 +119,40 @@ public class UtilisateurDAOJdbcImpl implements DAO<Utilisateur> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public Utilisateur connexion(String login, String motDePasse) throws BusinessException {
+		Utilisateur utilisateur = null;
+		try (Connection cnx = PoolConnection.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(SELECT_UTILISATEUR_BY_CONNEXION)) {
+			pstmt.setString(1, motDePasse);
+			pstmt.setString(2, login);
+			pstmt.setString(3, login);
+			ResultSet rs = pstmt.executeQuery();
+			// MAPPING
+			if (rs.next()) {
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				String email = rs.getString("email");
+				String telephone = rs.getString("telephone");
+				String rue = rs.getString("rue");
+				String codePostal = rs.getString("code_postal");
+				String ville = rs.getString("ville");
+				int credit = rs.getInt("credit");
+				boolean administrateur = rs.getBoolean("administrateur");
+				boolean utilisateurDesactive = rs.getBoolean("utilisateur_desactive");
+				boolean utilisateurSupprime = rs.getBoolean("utilisateur_supprime");
+				utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal,
+						ville, motDePasse, credit, administrateur, utilisateurDesactive, utilisateurSupprime);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return utilisateur;
 	}
 
 }

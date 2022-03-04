@@ -17,6 +17,10 @@ public class DAOFactory {
 		return new UtilisateurDAOJdbcImpl();
 	}
 
+	public static DAOUtilisateur getUtilisateurDAO2() {
+		return new UtilisateurDAOJdbcImpl();
+	}
+
 	public static DAO<ArticleVendu> getArticleVenduDAO() {
 		return new ArticleVenduDAOJdbcImpl();
 	}

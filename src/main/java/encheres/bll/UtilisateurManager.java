@@ -6,13 +6,16 @@ import encheres.BusinessException;
 import encheres.bo.Utilisateur;
 import encheres.dal.DAO;
 import encheres.dal.DAOFactory;
+import encheres.dal.DAOUtilisateur;
 
 public class UtilisateurManager {
 
 	DAO<Utilisateur> utilisateurDAO;
+	DAOUtilisateur utilisateurDAO2;
 
 	public UtilisateurManager() {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
+		utilisateurDAO2 = DAOFactory.getUtilisateurDAO2();
 	}
 
 	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException {
@@ -33,6 +36,10 @@ public class UtilisateurManager {
 
 	public List<Utilisateur> selectAllUtilisateurs(int identifiant) throws BusinessException {
 		return utilisateurDAO.selectAll();
+	}
+
+	public Utilisateur connexion(String login, String motDePasse) throws BusinessException {
+		return utilisateurDAO2.connexion(login, motDePasse);
 	}
 
 }
