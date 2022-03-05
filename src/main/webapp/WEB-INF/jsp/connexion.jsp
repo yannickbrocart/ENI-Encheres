@@ -34,13 +34,9 @@
 					</div>
 				</div>
 			</div>
-		</form>
-	</section>
-	<section class="row justify-content-center">
-		<form class="col-4" action="<%=request.getContextPath()%>/InscriptionServlet" method="post">
-			<div class="row mb-3">
-				<div class="d-grid gap-2">
-				<button type="submit" class="btn btn-primary" name ="submit" value="creeruncompte">Créer un compte</button></div> 
+			<div class="row mt-3 mb-5">
+				<a class="d-grid gap-2" href="<%=request.getContextPath()%>/InscriptionServlet">
+				<button type="button" class="btn btn-primary">Créer un compte</button></a>
 			</div>
 		</form>
 	</section>

@@ -19,11 +19,11 @@ public class UtilisateurDAOJdbcImpl implements DAOUtilisateur {
 	private static final String DELETE_UTILISATEUR = "DELETE FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String SELECT_UTILISATEUR_BY = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String SELECT_ALL_UTILISATEURS = "SELECT * FROM utilisateurs";
-	private static final String SELECT_UTILISATEUR_BY_CONNEXION = "SELECT * FROM utilisateurs WHERE mot_de_passe=? and (pseudo=? OR email=?)";
-	public Utilisateur monProfilUtilisateur;
+	private static final String SELECT_UTILISATEUR_BY_CONNEXION = "SELECT * FROM utilisateurs WHERE mot_de_passe=? AND (pseudo=? OR email=?)";
 
 	@Override
-	public void insert(Utilisateur utilisateur) {
+	public int insert(Utilisateur utilisateur) {
+		int noUtilisateur = 0;
 		try (Connection cnx = PoolConnection.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT_UTILISATEUR,
 						PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -41,11 +41,13 @@ public class UtilisateurDAOJdbcImpl implements DAOUtilisateur {
 			pstmt.setBoolean(12, utilisateur.isUtilisateurDesactive());
 			pstmt.setBoolean(13, utilisateur.isUtilisateurSupprime());
 			pstmt.executeUpdate();
-			ResultSet rs = pstmt.getGeneratedKeys();
-			monProfilUtilisateur.setNoUtilisateur(rs.getInt(1));
+			ResultSet key = pstmt.getGeneratedKeys();
+			key.next();
+			noUtilisateur = key.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return noUtilisateur;
 	}
 
 	@Override

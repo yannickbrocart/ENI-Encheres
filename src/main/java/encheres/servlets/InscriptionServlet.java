@@ -19,27 +19,35 @@ public class InscriptionServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		request.getRequestDispatcher("/WEB-INF/jsp/Inscription.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		String encryptedPassword = null;
-		try {
-			encryptedPassword = LoginAndPasswordSecurity.passwordEncryption(request.getParameter("motdepasse"));
-		} catch (BusinessException e1) {
-			e1.printStackTrace();
+		// Si 2 nouveaux password identiques
+		if (request.getParameter("motdepasse").equals(request.getParameter("motdepasseconfirme"))) {
+			UtilisateurManager utilisateurManager = new UtilisateurManager();
+			String encryptedPassword = null;
+			try {
+				encryptedPassword = LoginAndPasswordSecurity.passwordEncryption(request.getParameter("motdepasse"));
+			} catch (BusinessException e1) {
+				e1.printStackTrace();
+			}
+			Utilisateur monProfilUtilisateur = new Utilisateur(request.getParameter("pseudo"),
+					request.getParameter("nom"), request.getParameter("prenom"), request.getParameter("email"),
+					request.getParameter("telephone"), request.getParameter("rue"), request.getParameter("codepostal"),
+					request.getParameter("ville"), encryptedPassword);
+			try {
+				utilisateurManager.insertUtilisateur(monProfilUtilisateur);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+		} else {
+			// throw new ServletException();
+			System.out.println("Confirmation nouveau mot de passe erronnée");
 		}
-		Utilisateur utilisateur = new Utilisateur(request.getParameter("pseudo"), request.getParameter("nom"),
-				request.getParameter("prenom"), request.getParameter("email"), request.getParameter("telephone"),
-				request.getParameter("rue"), request.getParameter("codepostal"), request.getParameter("ville"),
-				encryptedPassword);
-		try {
-			utilisateurManager.insertUtilisateur(utilisateur);
-		} catch (BusinessException e) {
-			e.printStackTrace();
-		}
+		request.getRequestDispatcher("/WEB-INF/jsp/Accueil.jsp").forward(request, response);
 	}
 
 }

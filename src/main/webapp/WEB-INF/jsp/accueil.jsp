@@ -10,7 +10,18 @@
 </head>
 <body class="container-fluid col-10">
 	<header class="row mt-3">
-		<a class="text-end" href="<%=request.getContextPath()%>/ConnexionServlet">S'inscrire - Se connecter</a>	
+		<% if (session.getAttribute("monProfilUtilisateur") == null) { %>>
+			<ul class="list-inline text-end">
+				<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/ConnexionServlet">S'inscrire - Se connecter</a></li>
+			</ul>	
+		<% } else { %>
+			<ul class="list-inline text-end">
+				<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/EncheresServlet">Enchères</a></li>
+				<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/VendreUnArticleServlet">Vendre un article</a></li>
+				<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/ProfilServlet">Mon profil</a></li>
+				<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/DeconnexionServlet">Se déconnecter</a></li>
+			</ul>
+		<% } %>
 	</header>
 	<section class="row justify-content-center">
 		<h3 class="mt-5 text-center">Liste des enchères</h3>

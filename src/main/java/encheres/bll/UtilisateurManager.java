@@ -18,8 +18,8 @@ public class UtilisateurManager {
 		utilisateurDAO2 = DAOFactory.getUtilisateurDAO2();
 	}
 
-	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException {
-		utilisateurDAO.insert(utilisateur);
+	public int insertUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		return utilisateurDAO.insert(utilisateur);
 	}
 
 	public void updateUtilisateur(int identifiant, Utilisateur utilisateur) throws BusinessException {
