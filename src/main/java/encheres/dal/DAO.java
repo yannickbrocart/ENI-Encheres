@@ -6,7 +6,7 @@ import encheres.BusinessException;
 
 public interface DAO<T> {
 
-	public void insert(T s) throws BusinessException;
+	public int insert(T s) throws BusinessException;
 
 	public void update(T s) throws BusinessException;
 

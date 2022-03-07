@@ -11,12 +11,17 @@
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
 
-	<servlet>
-		<servlet-name>accueil</servlet-name>
-		<servlet-class>encheres.servlets.AccueilServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
+  <servlet>
 	<servlet-name>accueil</servlet-name>
-	<url-pattern>/accueil</url-pattern>
-</servlet-mapping>
+	<servlet-class>encheres.servlets.AccueilServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>accueil</servlet-name>
+	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <session-config>
+	<session-timeout>5</session-timeout>
+  </session-config>
+  
 </web-app>

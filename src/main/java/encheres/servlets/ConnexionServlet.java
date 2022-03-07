@@ -20,7 +20,7 @@ public class ConnexionServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/jsp/Connexion.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -43,12 +43,12 @@ public class ConnexionServlet extends HttpServlet {
 			// Création d'une session
 			if (monProfilUtilisateur != null) {
 				HttpSession session = request.getSession();
-				session.setMaxInactiveInterval(300);
+				session.setMaxInactiveInterval(40);
 				monProfilUtilisateur.setMotDePasse(null);
 				session.setAttribute("monProfilUtilisateur", monProfilUtilisateur);
-				request.getRequestDispatcher("/WEB-INF/jsp/Accueil.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp").forward(request, response);
 			} else
-				request.getRequestDispatcher("/WEB-INF/jsp/Connexion.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp").forward(request, response);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}

@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import encheres.BusinessException;
 import encheres.bll.UtilisateurManager;
@@ -20,14 +21,19 @@ public class ProfilServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		Utilisateur utilisateur = null;
+		HttpSession session = request.getSession();
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("monProfilUtilisateur");
+		int noUtilisateur = utilisateur.getNoUtilisateur();
 		try {
-			utilisateur = utilisateurManager.selectUtilisateurById(1);
+			utilisateur = utilisateurManager.selectUtilisateurById(noUtilisateur);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
+		if (request.getParameter("modifier") != null) {
+			request.setAttribute("modifier", "true");
+		}
 		request.setAttribute("utilisateur", utilisateur);
-		request.getRequestDispatcher("/WEB-INF/jsp/Profil.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/profil.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

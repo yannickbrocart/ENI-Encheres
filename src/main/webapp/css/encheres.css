@@ -1,0 +1,20 @@
+@charset "ISO-8859-1";
+
+a {
+	color: #A2A2A2;
+	text-decoration: none;
+}
+
+#logo a, a:hover {
+	color: #004982;
+}
+
+fieldset {
+  	padding: 10px;border: 1px solid;
+  	border-color:#d7d7d7;
+  	border-radius:4px;	
+}
+
+.nopadding {
+	padding:0px;
+}

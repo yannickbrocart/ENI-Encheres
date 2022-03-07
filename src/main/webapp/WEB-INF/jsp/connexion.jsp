@@ -6,9 +6,15 @@
 <head>
 <meta charset="ISO-8859-1">
 <link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/encheres.css" rel="stylesheet">
 <title>Connexion</title>
 </head>
 <body class="container-fluid col-10">
+	<header class="row mt-3 align-items-center">
+		<div id="logo" class="col-6 fs-2">
+			<a href="<%=request.getContextPath()%>/">ENI-Enchères</a>
+		</div>
+	</header>
 
 	<section class="row justify-content-center">
 		<form class="mt-5 col-4" action="<%=request.getContextPath()%>/ConnexionServlet" method="post">
@@ -26,7 +32,7 @@
 				</div>
 				<div class="col-6" align="right">
 					<div>
-						<input class="form-check-input" type="checkbox" name="remember" />
+						<input class="form-check-input bg-primary rounded-0 border-white" type="checkbox" name="remember" />
 						<label class="form-check-label"> Se souvenir de moi</label>
 					</div>
 					<div>

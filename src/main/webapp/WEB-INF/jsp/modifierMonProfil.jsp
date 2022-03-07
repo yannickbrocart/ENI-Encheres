@@ -6,9 +6,15 @@
 <head>
 <meta charset="ISO-8859-1">
 <link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/encheres.css" rel="stylesheet">
 <title>Modifier mon profil</title>
 </head>
 <body class="container-fluid col-10">
+	<header class="row mt-3 align-items-center">
+		<div id="logo" class="col-6 fs-2">
+			<a href="<%=request.getContextPath()%>/">ENI-Enchères</a>
+		</div>
+	</header>
 
 	<section class="row justify-content-center">
 		<h3 class="mt-5 text-center">Mon profil</h3>

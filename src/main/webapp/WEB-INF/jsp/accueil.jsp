@@ -6,22 +6,29 @@
 <head>
 <meta charset="ISO-8859-1">
 <link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/encheres.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/all.css" rel="stylesheet">
 <title>Accueil</title>
 </head>
 <body class="container-fluid col-10">
-	<header class="row mt-3">
-		<% if (session.getAttribute("monProfilUtilisateur") == null) { %>>
-			<ul class="list-inline text-end">
-				<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/ConnexionServlet">S'inscrire - Se connecter</a></li>
-			</ul>	
-		<% } else { %>
-			<ul class="list-inline text-end">
-				<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/EncheresServlet">Enchères</a></li>
-				<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/VendreUnArticleServlet">Vendre un article</a></li>
-				<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/ProfilServlet">Mon profil</a></li>
-				<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/DeconnexionServlet">Se déconnecter</a></li>
-			</ul>
-		<% } %>
+	<header class="row mt-3 align-items-center">
+		<div id="logo" class="col-6 fs-2">
+			<a href="<%=request.getContextPath()%>/">ENI-Enchères</a>
+		</div>
+		<div class="col-6">
+			<% if (session.getAttribute("monProfilUtilisateur") == null) { %>
+				<ul class="list-inline text-end">
+					<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/ConnexionServlet">S'inscrire - Se connecter</a></li>
+				</ul>	
+			<% } else { %>
+				<ul class="list-inline text-end">
+					<li class="list-inline-item px-2"><a class="text-end" href="<%=request.getContextPath()%>/EncheresServlet">Enchères</a></li>
+					<li class="list-inline-item px-2"><a class="text-end" href="<%=request.getContextPath()%>/VendreUnArticleServlet">Vendre un article</a></li>
+					<li class="list-inline-item px-2"><a class="text-end" href="<%=request.getContextPath()%>/ProfilServlet?modifier="true"">Mon profil</a></li>
+					<li class="list-inline-item"><a class="text-end" href="<%=request.getContextPath()%>/DeconnexionServlet">Se déconnecter</a></li>
+				</ul>
+			<% } %>
+		</div>
 	</header>
 	<section class="row justify-content-center">
 		<h3 class="mt-5 text-center">Liste des enchères</h3>
@@ -33,17 +40,21 @@
 				<div class="col-6">
 					<div class="row">
 						<div class="col-10 mb-3">
-							<input class="form-control" name="filtre" type="search" placeholder="Le nom de l'artiste contient" required />
+							<div class="input-group">
+								<span class="input-group-text"><i class="fas fa-search"></i></span>
+								<input class="form-control" name="filtre" type="text" placeholder="Le nom de l'article contient" required />
+							</div>
 						</div>
 						<label class="col-3 col-form-label">Catégorie : </label>
 						<div class="col-7">
-							<select class="form-control" name="categorie" required>
-								<option>Toutes</option>
-								<option>Informatique</option>
-                                <option>Ameublement</option>
-                                <option>Vêtement</option>
-                                <option>Sport&Loisirs</option>
- 							 </select>
+							<select class="form-select" name="categorie" required>
+								<option selected>Choisir une catégorie...</option>
+								<option value="1">Toutes</option>
+								<option value="2">Informatique</option>
+		                        <option value="3">Ameublement</option>
+		                        <option value="4">Vêtement</option>
+		                        <option value="5">Sport&Loisirs</option>
+		 					 </select>
 						</div>
 					</div>
 				</div>
