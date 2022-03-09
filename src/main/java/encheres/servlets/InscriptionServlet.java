@@ -44,13 +44,12 @@ public class InscriptionServlet extends HttpServlet {
 					request.getParameter("rue"), request.getParameter("codepostal"), request.getParameter("ville"),
 					encryptedPassword);
 			try {
-				noUtilisateur = utilisateurManager.insertUtilisateur(monProfilUtilisateur);
+				noUtilisateur = utilisateurManager.insertUtilisateurWithId(monProfilUtilisateur);
 				monProfilUtilisateur.setNoUtilisateur(noUtilisateur);
 				HttpSession session = request.getSession();
-				session.setMaxInactiveInterval(300);
 				monProfilUtilisateur.setMotDePasse(null);
 				session.setAttribute("monProfilUtilisateur", monProfilUtilisateur);
-				request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp").forward(request, response);
+				request.getRequestDispatcher("/").forward(request, response);
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}

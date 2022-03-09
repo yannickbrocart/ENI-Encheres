@@ -49,12 +49,12 @@
 			<div class="col-2"><c:out value="Ville : "/></div>
 			<div class="col-5"><c:out value="${utilisateur.ville}" /></div>
 		</div>
-		<% if (request.getParameter("modifier")!=null) { %> 
+		<c:if test="${modifier=='true'}">
 			<div class="row mt-5 mb-3 justify-content-center gap-5">
 				<a class="col-3" href="<%=request.getContextPath()%>/ModifierMonProfilServlet">
 				<button type="button" class="btn btn-primary col-12">Modifier</button></a>
 			</div>
-		<% } %>
+		</c:if>
 	</section>
 </body>
 </html>

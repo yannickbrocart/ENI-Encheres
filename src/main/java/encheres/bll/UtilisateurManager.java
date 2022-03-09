@@ -18,8 +18,12 @@ public class UtilisateurManager {
 		utilisateurDAO2 = DAOFactory.getUtilisateurDAO2();
 	}
 
-	public int insertUtilisateur(Utilisateur utilisateur) throws BusinessException {
-		return utilisateurDAO.insert(utilisateur);
+	public int insertUtilisateurWithId(Utilisateur utilisateur) throws BusinessException {
+		return utilisateurDAO.insertWithId(utilisateur);
+	}
+
+	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		utilisateurDAO.insert(utilisateur);
 	}
 
 	public void updateUtilisateur(int identifiant, Utilisateur utilisateur) throws BusinessException {
@@ -34,7 +38,7 @@ public class UtilisateurManager {
 		return utilisateurDAO.selectById(identifiant);
 	}
 
-	public List<Utilisateur> selectAllUtilisateurs(int identifiant) throws BusinessException {
+	public List<Utilisateur> selectAllUtilisateurs() throws BusinessException {
 		return utilisateurDAO.selectAll();
 	}
 

@@ -52,7 +52,7 @@ public class ModifierMonProfilServlet extends HttpServlet {
 		if (request.getParameter("submit").equals("supprimer")) {
 			try {
 				utilisateurManager.deleteUtilisateur(noUtilisateur);
-				request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp").forward(request, response);
+				request.getRequestDispatcher("/DeconnexionServlet").forward(request, response);
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}

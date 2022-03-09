@@ -22,7 +22,7 @@ public class UtilisateurDAOJdbcImpl implements DAOUtilisateur {
 	private static final String SELECT_UTILISATEUR_BY_CONNEXION = "SELECT * FROM utilisateurs WHERE mot_de_passe=? AND (pseudo=? OR email=?)";
 
 	@Override
-	public int insert(Utilisateur utilisateur) {
+	public int insertWithId(Utilisateur utilisateur) {
 		int noUtilisateur = 0;
 		try (Connection cnx = PoolConnection.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT_UTILISATEUR,
@@ -48,6 +48,10 @@ public class UtilisateurDAOJdbcImpl implements DAOUtilisateur {
 			e.printStackTrace();
 		}
 		return noUtilisateur;
+	}
+
+	@Override
+	public void insert(Utilisateur utilisateur) throws BusinessException {
 	}
 
 	@Override

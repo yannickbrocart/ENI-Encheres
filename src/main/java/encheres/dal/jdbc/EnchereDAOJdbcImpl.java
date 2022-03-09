@@ -9,6 +9,12 @@ import encheres.dal.DAO;
 public class EnchereDAOJdbcImpl implements DAO<Enchere> {
 
 	@Override
+	public int insertWithId(Enchere s) throws BusinessException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
 	public void insert(Enchere s) throws BusinessException {
 		// TODO Auto-generated method stub
 

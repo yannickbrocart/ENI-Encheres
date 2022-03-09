@@ -43,10 +43,9 @@ public class ConnexionServlet extends HttpServlet {
 			// Création d'une session
 			if (monProfilUtilisateur != null) {
 				HttpSession session = request.getSession();
-				session.setMaxInactiveInterval(40);
 				monProfilUtilisateur.setMotDePasse(null);
 				session.setAttribute("monProfilUtilisateur", monProfilUtilisateur);
-				request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp").forward(request, response);
+				request.getRequestDispatcher("/").forward(request, response);
 			} else
 				request.getRequestDispatcher("/WEB-INF/jsp/connexion.jsp").forward(request, response);
 		} catch (BusinessException e) {

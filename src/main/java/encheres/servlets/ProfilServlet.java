@@ -21,24 +21,38 @@ public class ProfilServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		Utilisateur utilisateur = new Utilisateur();
 		HttpSession session = request.getSession();
-		Utilisateur utilisateur = (Utilisateur) session.getAttribute("monProfilUtilisateur");
-		int noUtilisateur = utilisateur.getNoUtilisateur();
-		try {
-			utilisateur = utilisateurManager.selectUtilisateurById(noUtilisateur);
-		} catch (BusinessException e) {
-			e.printStackTrace();
+		Utilisateur monProfilUtilisateur = (Utilisateur) session.getAttribute("monProfilUtilisateur");
+		int monNoUtilisateur = monProfilUtilisateur.getNoUtilisateur();
+
+		// lien vers profil étranger
+		if (request.getParameter("modifier") == null
+				&& !(Integer.parseInt(request.getParameter("noVendeur")) == monNoUtilisateur)) {
+			try {
+				utilisateur = utilisateurManager
+						.selectUtilisateurById(Integer.parseInt(request.getParameter("noVendeur")));
+			} catch (NumberFormatException | BusinessException e) {
+				e.printStackTrace();
+			}
 		}
-		if (request.getParameter("modifier") != null) {
+
+		else {
+			// lien vers mon profil
 			request.setAttribute("modifier", "true");
+			try {
+				utilisateur = utilisateurManager.selectUtilisateurById(monNoUtilisateur);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
 		}
+
 		request.setAttribute("utilisateur", utilisateur);
 		request.getRequestDispatcher("/WEB-INF/jsp/profil.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

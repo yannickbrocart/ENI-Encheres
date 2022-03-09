@@ -37,4 +37,8 @@ public class DAOFactory {
 		return new RetraitDAOJdbcImpl();
 	}
 
+	public static DAORetrait getRetraitDAO2() {
+		return new RetraitDAOJdbcImpl();
+	}
+
 }

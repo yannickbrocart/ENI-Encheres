@@ -14,7 +14,7 @@ public class ArticleVendu {
 	private boolean venteActive;
 	private Utilisateur vendeur;
 	private int categorieArticle;
-	private int noLieuRetrait;
+	private Retrait lieuRetrait;
 	private boolean articleSupprime;
 	private byte[] photo;
 
@@ -22,8 +22,8 @@ public class ArticleVendu {
 	}
 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, Utilisateur vendeur, int categorieArticle,
-			int noLieuRetrait, byte[] photo) {
+			LocalDate dateFinEncheres, int miseAPrix, int prixVente, boolean venteActive, Utilisateur vendeur,
+			int categorieArticle, Retrait lieuRetrait, boolean articleSupprime, byte[] photo) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -31,12 +31,30 @@ public class ArticleVendu {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
-		this.venteActive = false;
+		this.venteActive = venteActive;
 		this.vendeur = vendeur;
 		this.categorieArticle = categorieArticle;
-		this.noLieuRetrait = noLieuRetrait;
-		this.articleSupprime = false;
+		this.lieuRetrait = lieuRetrait;
+		this.articleSupprime = articleSupprime;
 		this.photo = photo;
+	}
+
+	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, int prixVente, boolean venteActive, Utilisateur vendeur, int categorieArticle,
+			Retrait lieuRetrait, boolean articleSupprime) {
+		this.noArticle = 0;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.venteActive = venteActive;
+		this.vendeur = vendeur;
+		this.categorieArticle = categorieArticle;
+		this.lieuRetrait = lieuRetrait;
+		this.articleSupprime = articleSupprime;
+		this.photo = null;
 	}
 
 	public int getNoArticle() {
@@ -119,12 +137,12 @@ public class ArticleVendu {
 		this.categorieArticle = categorieArticle;
 	}
 
-	public int getNoLieuRetrait() {
-		return noLieuRetrait;
+	public Retrait getLieuRetrait() {
+		return lieuRetrait;
 	}
 
-	public void setNoLieuRetrait(int noLieuRetrait) {
-		this.noLieuRetrait = noLieuRetrait;
+	public void setNoLieuRetrait(Retrait lieuRetrait) {
+		this.lieuRetrait = lieuRetrait;
 	}
 
 	public boolean isArticleSupprime() {
@@ -148,8 +166,8 @@ public class ArticleVendu {
 		return "ArticleVendu [noArticle = " + noArticle + ", nomArticle = " + nomArticle + ", description = "
 				+ description + ", dateDebutEncheres = " + dateDebutEncheres + ", dateFinEncheres = " + dateFinEncheres
 				+ ", miseAPrix = " + miseAPrix + ", prixVente = " + prixVente + ", venteActive = " + venteActive
-				+ ", nomvendeur = " + vendeur.getNom() + ", categorieArticle = " + categorieArticle
-				+ ", noLieuRetrait = " + noLieuRetrait + ", articleSupprime = " + articleSupprime + "]";
+				+ ", Vendeur = " + vendeur + ", categorieArticle = " + categorieArticle + ", lieuRetrait = "
+				+ lieuRetrait + ", articleSupprime = " + articleSupprime + "]";
 	}
 
 }

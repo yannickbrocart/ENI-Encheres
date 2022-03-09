@@ -46,15 +46,15 @@ CREATE TABLE ARTICLES_VENDUS (
     no_article				INTEGER IDENTITY(1,1) NOT NULL,
     nom_article				VARCHAR(30) NOT NULL,
     description_article		VARCHAR(300) NOT NULL,
-	date_debut_encheres		DATE NOT NULL,
-    date_fin_encheres		DATE NOT NULL,
-    prix_initial			INTEGER,
+	date_debut_encheres		DATETIME NOT NULL,
+    date_fin_encheres		DATETIME NOT NULL,
+    prix_initial			INTEGER NOT NULL,
     prix_vente				INTEGER,
 	vente_active			BIT NOT NULL,
     no_utilisateur			INTEGER NOT NULL,
     no_categorie			INTEGER NOT NULL,
 	article_supprime		BIT NOT NULL,
-	photo_article			IMAGE,
+	photo_article			VARBINARY(MAX),
 	CONSTRAINT articles_vendus_pk PRIMARY KEY (no_article)
 )
 
@@ -85,7 +85,8 @@ INSERT INTO CATEGORIES(libelle) VALUES('Informatique');
 INSERT INTO CATEGORIES(libelle) VALUES('Ameublement');
 INSERT INTO CATEGORIES(libelle) VALUES('Vêtement');
 INSERT INTO CATEGORIES(libelle) VALUES('Sport&Loisirs');
+DELETE FROM CATEGORIES WHERE libelle='Animaux';
 
 
 --SUPRESSION DES TABLES
-DROP TABLE CATEGORIES, RETRAITS, ENCHERES, UTILISATEURS, ARTICLES_VENDUS;
+--DROP TABLE ENCHERES, RETRAITS, ARTICLES_VENDUS, CATEGORIES, UTILISATEURS;
