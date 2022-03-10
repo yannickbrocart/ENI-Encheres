@@ -12,7 +12,9 @@ import encheres.dal.DAORetrait;
 public class RetraitDAOJdbcImpl implements DAORetrait {
 
 	private static final String INSERT_RETRAIT = "INSERT INTO retraits(no_article,rue,code_postal,ville) VALUES(?,?,?,?)";
+	private static final String UPDATE_RETRAIT = "UPDATE retraits SET rue=?,code_postal=?,ville=? WHERE no_article=?";
 	private static final String SELECT_RETRAIT_BY_ID = "SELECT * FROM retraits WHERE no_article=?";
+	private static final String DELETE_RETRAIT = "DELETE FROM retraits WHERE no_article=?";
 
 	@Override
 	public void insertWithNoArticle(Retrait retrait, int noArticle) throws BusinessException {
@@ -29,7 +31,17 @@ public class RetraitDAOJdbcImpl implements DAORetrait {
 	}
 
 	@Override
-	public void update(Retrait retrait) throws BusinessException {
+	public void update(int identifiant, Retrait retrait) throws BusinessException {
+		try (Connection cnx = PoolConnection.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_RETRAIT)) {
+			pstmt.setString(1, retrait.getRue());
+			pstmt.setString(2, retrait.getCodePostal());
+			pstmt.setString(3, retrait.getVille());
+			pstmt.setInt(4, identifiant);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -52,6 +64,13 @@ public class RetraitDAOJdbcImpl implements DAORetrait {
 
 	@Override
 	public void delete(int identifiant) throws BusinessException {
+		try (Connection cnx = PoolConnection.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(DELETE_RETRAIT)) {
+			pstmt.setInt(1, identifiant);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

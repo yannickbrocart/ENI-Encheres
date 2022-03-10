@@ -85,8 +85,15 @@ INSERT INTO CATEGORIES(libelle) VALUES('Informatique');
 INSERT INTO CATEGORIES(libelle) VALUES('Ameublement');
 INSERT INTO CATEGORIES(libelle) VALUES('Vêtement');
 INSERT INTO CATEGORIES(libelle) VALUES('Sport&Loisirs');
-DELETE FROM CATEGORIES WHERE libelle='Animaux';
 
+
+
+--DELETE FROM ARTICLES_VENDUS WHERE no_article='7';
 
 --SUPRESSION DES TABLES
+--DROP TABLE ENCHERES, RETRAITS, ARTICLES_VENDUS, CATEGORIES, UTILISATEURS;
+
+--SELECT * FROM articles_vendus INNER JOIN retraits ON articles_vendus.no_article = retraits.no_article INNER JOIN utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_article=2;
+--UPDATE UTILISATEURS SET credit=500;
+
 --DROP TABLE ENCHERES, RETRAITS, ARTICLES_VENDUS, CATEGORIES, UTILISATEURS;

@@ -24,7 +24,7 @@ public class CategorieDAOJdbcImpl implements DAO<Categorie> {
 	}
 
 	@Override
-	public void update(Categorie s) throws BusinessException {
+	public void update(int identifiant, Categorie s) throws BusinessException {
 	}
 
 	@Override

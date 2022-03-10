@@ -7,11 +7,11 @@ import encheres.bo.Categorie;
 import encheres.dal.DAO;
 import encheres.dal.DAOFactory;
 
-public class CategoriesManager {
+public class CategorieManager {
 
 	DAO<Categorie> categorieDAO;
 
-	public CategoriesManager() {
+	public CategorieManager() {
 		categorieDAO = DAOFactory.getCategorieDAO();
 	}
 

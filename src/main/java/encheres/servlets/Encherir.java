@@ -1,8 +1,6 @@
 package encheres.servlets;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,56 +13,67 @@ import javax.servlet.http.HttpSession;
 import encheres.BusinessException;
 import encheres.bll.ArticleVenduManager;
 import encheres.bll.CategorieManager;
-import encheres.bll.RetraitManager;
+import encheres.bll.EnchereManager;
 import encheres.bo.ArticleVendu;
 import encheres.bo.Categorie;
-import encheres.bo.Retrait;
+import encheres.bo.Enchere;
 import encheres.bo.Utilisateur;
 
-@WebServlet("/VendreUnArticleServlet")
-public class VendreUnArticleServlet extends HttpServlet {
+@WebServlet("/EncherirServlet")
+public class Encherir extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public ArticleVendu articleVendu = null;
-	public Retrait retrait = null;
+	private ArticleVendu articleVendu;
+	private Enchere enchere;
+	private int noArticleVendu;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		List<Categorie> listeCategories = null;
+		List<Enchere> listeEncheres = null;
+		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		CategorieManager categorieManager = new CategorieManager();
+		EnchereManager enchereManager = new EnchereManager();
+		noArticleVendu = Integer.parseInt(request.getParameter("noArticle"));
 		try {
 			listeCategories = categorieManager.selectAllCategories();
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
+		try {
+			articleVendu = articleVenduManager.selectArticleVenduById(noArticleVendu);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		try {
+			listeEncheres = enchereManager.selectAllEncheres();
+			int montant = 0;
+			for (Enchere id : listeEncheres) {
+				if (id.getMontantEnchere() > montant) {
+					enchere = id;
+				}
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
 		request.setAttribute("listeCategories", listeCategories);
-		request.getRequestDispatcher("/WEB-INF/jsp/vendreUnArticle.jsp").forward(request, response);
+		request.setAttribute("articleVendu", articleVendu);
+		request.setAttribute("enchere", enchere);
+		request.getRequestDispatcher("/WEB-INF/jsp/encherir.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		HttpSession session = request.getSession();
-		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
-		RetraitManager retraitManager = new RetraitManager();
+		EnchereManager enchereManager = new EnchereManager();
 		Utilisateur vendeur = (Utilisateur) session.getAttribute("monProfilUtilisateur");
-		int noArticleVendu = 0;
-		boolean venteActive = false;
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		retrait = new Retrait(request.getParameter("rue"), request.getParameter("codePostal"),
-				request.getParameter("ville"));
-		articleVendu = new ArticleVendu(request.getParameter("article"), request.getParameter("description"),
-				LocalDate.parse(request.getParameter("dateDebutEncheres"), dtf),
-				LocalDate.parse(request.getParameter("dateFinEncheres"), dtf),
-				Integer.parseInt(request.getParameter("miseAPrix")), 0, venteActive, vendeur,
-				Integer.parseInt(request.getParameter("categorie")), retrait, false);
+		enchere = new Enchere(vendeur.getNoUtilisateur(), articleVendu.getNoArticle(),
+				articleVendu.getDateFinEncheres(), Integer.parseInt(request.getParameter("enchere")));
 		try {
-			noArticleVendu = articleVenduManager.insertArticleVenduWithId(articleVendu);
-			retraitManager.insertWithNoArticle(retrait, noArticleVendu);
+			enchereManager.insertEnchereWithId(enchere);
 			request.getRequestDispatcher("/").forward(request, response);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }

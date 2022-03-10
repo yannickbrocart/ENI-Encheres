@@ -32,7 +32,7 @@
 				</div>
 				<div class="col-6" align="right">
 					<div>
-						<input class="form-check-input bg-primary rounded-0 border-white" type="checkbox" name="remember" />
+						<input class="form-check-input bg-primary rounded-0 border-white" type="checkbox" name="remember" value="true" />
 						<label class="form-check-label"> Se souvenir de moi</label>
 					</div>
 					<div>

@@ -24,7 +24,7 @@ public class ArticleVenduManager {
 	}
 
 	public void updateArticleVendu(int identifiant, ArticleVendu articleVendu) throws BusinessException {
-		articleVenduDAO.update(articleVendu);
+		articleVenduDAO.update(identifiant, articleVendu);
 	}
 
 	public void deleteArticleVendu(int identifiant) throws BusinessException {

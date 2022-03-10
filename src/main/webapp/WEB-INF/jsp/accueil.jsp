@@ -121,14 +121,14 @@
 						<div class="col-8 p-2">
 							<c:choose>
 								<c:when test="${monProfilUtilisateur==null}">
-									<c:out value="${id.nomArticle}"></c:out><br></a>
+									<c:out value="${id.nomArticle}"></c:out><br>
 									Prix : <c:out value="${id.miseAPrix}"></c:out> points<br>
 									Début de l'enchère : <c:out value="${id.dateDebutEncheres}"></c:out><br>
 									Fin de l'enchère : <c:out value="${id.dateFinEncheres}"></c:out><br><br>
-									Vendeur : <c:out value="${id.vendeur.pseudo}"></c:out></a>
+									Vendeur : <c:out value="${id.vendeur.pseudo}"></c:out>
 								</c:when>
 								<c:otherwise>
-									<a class="h5" href="<%=request.getContextPath()%>/EnchereServlet?noVendeur=${id.noArticle}">
+									<a class="h5" href="<%=request.getContextPath()%>/EnchereNonCommenceeServlet?noArticle=${id.noArticle}">
 									<c:out value="${id.nomArticle}"></c:out><br></a>
 									Prix : <c:out value="${id.miseAPrix}"></c:out> points<br>
 									Début de l'enchère : <c:out value="${id.dateDebutEncheres}"></c:out><br>

@@ -10,7 +10,7 @@ public interface DAO<T> {
 
 	public void insert(T s) throws BusinessException;
 
-	public void update(T s) throws BusinessException;
+	public void update(int identifiant, T s) throws BusinessException;
 
 	public T selectById(int identifiant) throws BusinessException;
 

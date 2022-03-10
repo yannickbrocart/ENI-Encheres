@@ -30,7 +30,7 @@ public class RetraitManager {
 	}
 
 	public void updateRetrait(int identifiant, Retrait retrait) throws BusinessException {
-		retraitDAO.update(retrait);
+		retraitDAO.update(identifiant, retrait);
 	}
 
 	public void deleteRetrait(int identifiant) throws BusinessException {

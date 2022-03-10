@@ -36,7 +36,7 @@ public class UtilisateurDAOJdbcImpl implements DAOUtilisateur {
 			pstmt.setString(7, utilisateur.getCodePostal());
 			pstmt.setString(8, utilisateur.getVille());
 			pstmt.setString(9, utilisateur.getMotDePasse());
-			pstmt.setInt(10, utilisateur.getCredit());
+			pstmt.setInt(10, 500);
 			pstmt.setBoolean(11, utilisateur.isAdministrateur());
 			pstmt.setBoolean(12, utilisateur.isUtilisateurDesactive());
 			pstmt.setBoolean(13, utilisateur.isUtilisateurSupprime());
@@ -55,7 +55,7 @@ public class UtilisateurDAOJdbcImpl implements DAOUtilisateur {
 	}
 
 	@Override
-	public void update(Utilisateur utilisateur) {
+	public void update(int identifiant, Utilisateur utilisateur) {
 		try (Connection cnx = PoolConnection.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_UTILISATEUR)) {
 			pstmt.setString(1, utilisateur.getPseudo());
@@ -71,7 +71,7 @@ public class UtilisateurDAOJdbcImpl implements DAOUtilisateur {
 			pstmt.setBoolean(11, utilisateur.isAdministrateur());
 			pstmt.setBoolean(12, utilisateur.isUtilisateurDesactive());
 			pstmt.setBoolean(13, utilisateur.isUtilisateurSupprime());
-			pstmt.setInt(14, utilisateur.getNoUtilisateur());
+			pstmt.setInt(14, identifiant);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

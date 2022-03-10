@@ -93,7 +93,7 @@ public class ModifierMonProfilServlet extends HttpServlet {
 					try {
 						utilisateurManager.updateUtilisateur(monProfilUtilisateur.getNoUtilisateur(),
 								monProfilUtilisateur);
-						request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp").forward(request, response);
+						request.getRequestDispatcher("/").forward(request, response);
 					} catch (BusinessException e) {
 						e.printStackTrace();
 					}

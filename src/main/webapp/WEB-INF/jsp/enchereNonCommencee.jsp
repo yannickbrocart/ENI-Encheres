@@ -7,7 +7,7 @@
 <meta charset="ISO-8859-1">
 <link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/encheres.css" rel="stylesheet">
-<title>Vendre un article</title>
+<title>Enchère non commencée</title>
 </head>
 <body class="container-fluid col-10">
 	<header class="row mt-3 align-items-center">
@@ -24,61 +24,62 @@
 				<img alt="Photo article" src="images/blank.jpg" width="100%">
 			</div>
 		</div>
-		<form action="<%=request.getContextPath()%>/VendreUnArticleServlet" method="post" class="col-6">
+		<form action="<%=request.getContextPath()%>/EnchereNonCommenceeServlet" method="post" class="col-6">
 			<div class="row mt-3 mb-4">
 				<label class="col-3 col-form-label">Article : </label>
-				<div class="col-9"><input class="form-control" name="article" type="text" required /></div>
+				<div class="col-9"><input class="form-control" name="article" type="text" value="${articleVendu.nomArticle}" required /></div>
 			</div>
 			<div class="row mb-4">
 				<label class="col-3 col-form-label">Description : </label>
-				<div class="col-9"><textarea class="form-control" name="description" rows="3" required></textarea></div>
+				<div class="col-9"><textarea class="form-control" name="description" rows="3" required><c:out value="${articleVendu.description}"></c:out></textarea></div>
 			</div>
 			<div class="row mb-4">
 				<label class="col-6 col-form-label">Catégorie : </label>
 				<div class="col-6">
 					<select class="form-select" name="categorie" required>
-						<option selected>Choisir...</option>
+						<option>Choisir...</option>
 							<c:forEach var="id" items="${listeCategories}">
-							<option value="${id.noCategorie}">${id.libelle}</option>
+							<option value="${id.noCategorie}" ${id.noCategorie==articleVendu.categorieArticle ? "selected" : ""}>${id.libelle}</option>
 							</c:forEach>
  					 </select>
 				</div>
 			</div>
 			<div class="row mb-4">
-				<label class="col-3 col-form-label">Photo de l'article : </label>
-				<div class="d-grid gap-2 col-9"><input type="file" class="form-control" accept="image/png, image/jpeg" name ="Uploader"></div>
+				<label class="col-6 col-form-label">Photo de l'article : </label>
+				<div class="d-grid gap-2 col-6"><button type="submit" class="btn btn-primary" name ="submit">Uploader </button></div>
 			</div>
 			<div class="row mb-4">
 				<label class="col-8 col-form-label">Mise à prix : </label>
-				<div class="col-4"><input class="form-control" name="miseAPrix" type="number" value="1" required /></div>
+				<div class="col-4"><input class="form-control" name="miseAPrix" type="number" value="${articleVendu.miseAPrix}" required /></div>
 			</div>
 			<div class="row mb-4">
 				<label class="col-6 col-form-label">Début de l'enchère : </label>
-				<div class="col-6"><input class="form-control" name="dateDebutEncheres" type="date" required /></div>
+				<div class="col-6"><input class="form-control" name="dateDebutEncheres" type="date" value="${articleVendu.dateDebutEncheres}" required /></div>
 			</div>
 			<div class="row mb-4">
 				<label class="col-6 col-form-label">Fin de l'enchère : </label>
-				<div class="col-6"><input class="form-control" name="dateFinEncheres" type="date" required /></div>
+				<div class="col-6"><input class="form-control" name="dateFinEncheres" type="date" value="${articleVendu.dateFinEncheres}" required /></div>
 			</div>
 			<fieldset class="border">
                 <legend>Retrait</legend>
 				<div class="row mb-4">
 					<label class="col-3 col-form-label">Rue : </label>
-					<div class="col-9"><input class="form-control" name="rue" type="text" value="${sessionScope.monProfilUtilisateur.rue}" required /></div>
+					<div class="col-9"><input class="form-control" name="rue" type="text" value="${articleVendu.lieuRetrait.rue}" required /></div>
 				</div>
 				<div class="row mb-4">
 					<label class="col-3 col-form-label">Code postal : </label>
-					<div class="col-9"><input class="form-control" name="codePostal" type="text" value="${sessionScope.monProfilUtilisateur.codePostal}" required /></div>
+					<div class="col-9"><input class="form-control" name="codePostal" type="text" value="${articleVendu.lieuRetrait.codePostal}" required /></div>
 				</div>
 				<div class="row mb-4">
 					<label class="col-3 col-form-label">Ville : </label>
-					<div class="col-9"><input class="form-control" name="ville" type="text" value="${sessionScope.monProfilUtilisateur.ville}" required /></div>
+					<div class="col-9"><input class="form-control" name="ville" type="text" value="${articleVendu.lieuRetrait.ville}" required /></div>
 				</div>
 			</fieldset>	
-			<div class="row mt-3 mb-3 gap-5" style="padding-left:14px;">
-					<button type="submit" class="btn btn-primary col-4" name ="submit" value="enregistrer">Enregistrer</button>
-					<a class="col-4" href="<%=request.getContextPath()%>/">
+			<div class="row mt-3 mb-3 gap-4" style="padding-left:14px;">
+					<button type="submit" class="btn btn-primary col-3" name ="submit" value="enregistrer">Enregistrer</button>
+					<a class="col-3" href="<%=request.getContextPath()%>/">
 					<button type="button" class="btn btn-primary col-12">Annuler</button></a>
+					<button type="submit" class="btn btn-danger col-4" name ="submit" value="annuler">Annuler la vente</button>
 			</div>
 		</form>
 	</div>

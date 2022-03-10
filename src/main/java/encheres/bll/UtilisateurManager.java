@@ -27,7 +27,7 @@ public class UtilisateurManager {
 	}
 
 	public void updateUtilisateur(int identifiant, Utilisateur utilisateur) throws BusinessException {
-		utilisateurDAO.update(utilisateur);
+		utilisateurDAO.update(identifiant, utilisateur);
 	}
 
 	public void deleteUtilisateur(int identifiant) throws BusinessException {
