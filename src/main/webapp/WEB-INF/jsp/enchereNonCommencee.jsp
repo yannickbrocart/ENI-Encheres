@@ -45,8 +45,8 @@
 				</div>
 			</div>
 			<div class="row mb-4">
-				<label class="col-6 col-form-label">Photo de l'article : </label>
-				<div class="d-grid gap-2 col-6"><button type="submit" class="btn btn-primary" name ="submit">Uploader </button></div>
+				<label class="col-3 col-form-label">Photo de l'article : </label>
+				<div class="d-grid gap-2 col-9"><input type="file" class="form-control" accept="image/png, image/jpeg" name ="Uploader"></div>
 			</div>
 			<div class="row mb-4">
 				<label class="col-8 col-form-label">Mise à prix : </label>

@@ -11,11 +11,12 @@ import java.util.List;
 import encheres.BusinessException;
 import encheres.bo.Enchere;
 import encheres.dal.DAO;
+import encheres.dal.DAOEnchere;
 
-public class EnchereDAOJdbcImpl implements DAO<Enchere> {
+public class EnchereDAOJdbcImpl implements DAO<Enchere>, DAOEnchere {
 
 	private static final String INSERT_ENCHERE = "INSERT INTO encheres(no_utilisateur, no_article, date_enchere, montant_enchere) VALUES(?,?,?,?)";
-	private static final String SELECT_ENCHERE_BY_ID = "SELECT * FROM encheres WHERE no_article=?";
+	private static final String SELECT_ENCHERE_BY_ID = "SELECT * FROM encheres WHERE no_utilisateur=? AND no_article=?";
 	private static final String SELECT_ALL_ENCHERES = "SELECT * FROM encheres";
 
 	@Override
@@ -48,10 +49,17 @@ public class EnchereDAOJdbcImpl implements DAO<Enchere> {
 
 	@Override
 	public Enchere selectById(int identifiant) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Enchere selectById(int identifiant_1, int identifiant_2) throws BusinessException {
 		Enchere enchere = null;
 		try (Connection cnx = PoolConnection.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(SELECT_ENCHERE_BY_ID);) {
-			pstmt.setInt(1, identifiant);
+			pstmt.setInt(1, identifiant_1);
+			pstmt.setInt(2, identifiant_2);
 			ResultSet rs = pstmt.executeQuery();
 			// MAPPING
 			if (rs.next()) {
@@ -76,9 +84,9 @@ public class EnchereDAOJdbcImpl implements DAO<Enchere> {
 			while (rs.next()) {
 				int noUtilisateur = rs.getInt("no_utilisateur");
 				int noArticle = rs.getInt("no_article");
-				LocalDate dateFinEncheres = rs.getDate("date_enchere").toLocalDate();
+				LocalDate dateEnchere = rs.getDate("date_enchere").toLocalDate();
 				int montantEnchere = rs.getInt("montant_enchere");
-				Enchere enchere = new Enchere(noUtilisateur, noArticle, dateFinEncheres, montantEnchere);
+				Enchere enchere = new Enchere(noUtilisateur, noArticle, dateEnchere, montantEnchere);
 				listeEncheres.add(enchere);
 			}
 		} catch (SQLException e) {

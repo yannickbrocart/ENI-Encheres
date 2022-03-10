@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +54,7 @@
 							<select class="form-select" name="categorie" required>
 								<option value="toutes" selected>Toutes</option>
 								<c:forEach var="id" items="${listeCategories}">
-								<option value="${id}">${id.libelle}</option>
+									<option value="${id}">${id.libelle}</option>
 								</c:forEach>
 		 					 </select>
 						</div>
@@ -121,17 +122,46 @@
 						<div class="col-8 p-2">
 							<c:choose>
 								<c:when test="${monProfilUtilisateur==null}">
-									<c:out value="${id.nomArticle}"></c:out><br>
-									Prix : <c:out value="${id.miseAPrix}"></c:out> points<br>
-									Début de l'enchère : <c:out value="${id.dateDebutEncheres}"></c:out><br>
+									<span class="h5"><c:out value="${id.nomArticle}"></c:out></span><br>
+									<c:choose>
+										<c:when test="${id.prixVente == 0}">
+											Mise à prix : <c:out value="${id.miseAPrix}"></c:out> points<br>
+										</c:when>
+										<c:otherwise>
+											Prix de vente : <c:out value="${id.prixVente}"></c:out> points<br>
+										</c:otherwise>
+									</c:choose>
+									<c:choose>
+										<c:when test="${id.dateDebutEncheres >= now}">
+											Début de l'enchère : <c:out value="${id.dateDebutEncheres}"></c:out><br>
+										</c:when>
+										<c:otherwise>
+											Enchère en cours depuis le : <c:out value="${id.dateDebutEncheres}"></c:out><br>
+										</c:otherwise>
+									</c:choose>
 									Fin de l'enchère : <c:out value="${id.dateFinEncheres}"></c:out><br><br>
 									Vendeur : <c:out value="${id.vendeur.pseudo}"></c:out>
 								</c:when>
+								
 								<c:otherwise>
 									<a class="h5" href="<%=request.getContextPath()%>/EnchereNonCommenceeServlet?noArticle=${id.noArticle}">
 									<c:out value="${id.nomArticle}"></c:out><br></a>
-									Prix : <c:out value="${id.miseAPrix}"></c:out> points<br>
-									Début de l'enchère : <c:out value="${id.dateDebutEncheres}"></c:out><br>
+									<c:choose>
+										<c:when test="${id.prixVente == 0}">
+											Mise à prix : <c:out value="${id.miseAPrix}"></c:out> points<br>
+										</c:when>
+										<c:otherwise>
+											Prix de vente : <c:out value="${id.prixVente}"></c:out> points<br>
+										</c:otherwise>
+									</c:choose>
+									<c:choose>
+										<c:when test="${id.dateDebutEncheres >= now}">
+											Début de l'enchère : <c:out value="${id.dateDebutEncheres}"></c:out><br>
+										</c:when>
+										<c:otherwise>
+											Enchère en cours depuis le : <c:out value="${id.dateDebutEncheres}"></c:out><br>
+										</c:otherwise>
+									</c:choose>
 									Fin de l'enchère : <c:out value="${id.dateFinEncheres}"></c:out><br><br>
 									Vendeur : <a href="<%=request.getContextPath()%>/ProfilServlet?noVendeur=${id.vendeur.noUtilisateur}">
 									<c:out value="${id.vendeur.pseudo}"></c:out></a>

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import encheres.BusinessException;
@@ -112,8 +113,36 @@ public class UtilisateurDAOJdbcImpl implements DAOUtilisateur {
 
 	@Override
 	public List<Utilisateur> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Utilisateur> listeUtilisateurs = new ArrayList<>();
+
+		try (Connection cnx = PoolConnection.getConnection();
+				ResultSet rs = cnx.createStatement().executeQuery(SELECT_ALL_UTILISATEURS);) {
+			// MAPPING
+
+			while (rs.next()) {
+				Utilisateur utilisateur = new Utilisateur();
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				String email = rs.getString("email");
+				String telephone = rs.getString("telephone");
+				String rue = rs.getString("rue");
+				String codePostal = rs.getString("code_postal");
+				String ville = rs.getString("ville");
+				String motDePasse = rs.getString("mot_de_passe");
+				int credit = rs.getInt("credit");
+				boolean administrateur = rs.getBoolean("administrateur");
+				boolean utilisateurDesactive = rs.getBoolean("utilisateur_desactive");
+				boolean utilisateurSupprime = rs.getBoolean("utilisateur_supprime");
+				utilisateur = new Utilisateur(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal,
+						ville, motDePasse, credit, administrateur, utilisateurDesactive, utilisateurSupprime);
+				listeUtilisateurs.add(utilisateur);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listeUtilisateurs;
 	}
 
 	@Override

@@ -29,6 +29,10 @@ public class DAOFactory {
 		return new EnchereDAOJdbcImpl();
 	}
 
+	public static DAOEnchere getEnchereDAO2() {
+		return new EnchereDAOJdbcImpl();
+	}
+
 	public static DAO<Categorie> getCategorieDAO() {
 		return new CategorieDAOJdbcImpl();
 	}

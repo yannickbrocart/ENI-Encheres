@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri ="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,7 +57,19 @@
 					Meilleur offre : 
 				</div>
 				<div class="col-8">
-					<c:out value="${enchere.montantEnchere} points par ${articleVendu.vendeur.pseudo}"></c:out>
+					<c:choose>
+						<c:when test="${enchere != null}">
+	         				<c:out value="${enchere.montantEnchere} points par "></c:out>
+	         				<c:forEach var="liste" items="${listeUtilisateurs}">
+								<c:if test="${enchere.noUtilisateur eq liste.noUtilisateur}">
+         							<c:out value="${liste.pseudo}"/>
+         						</c:if>
+      						</c:forEach>
+	         			</c:when>
+	         			<c:otherwise>
+							Pas encore d'enchère !
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			<div class="row mb-4">
@@ -96,7 +109,14 @@
 				<div class="col-4">
 					Ma proposition : 
 				</div>
-				<div class="col-3"><input class="form-control" name="enchere" type="number" value="${enchere.montantEnchere+1}" min="${enchere.montantEnchere+1}" required /></div>
+				<c:choose>
+						<c:when test="${enchere != null}">
+							<div class="col-3"><input class="form-control" name="enchere" type="number" value="${enchere.montantEnchere+1}" min="${enchere.montantEnchere+1}" max="${monProfilUtilisateur.credit}" required /></div>
+	         			</c:when>
+	         			<c:otherwise>
+							<div class="col-3"><input class="form-control" name="enchere" type="number" value="${articleVendu.miseAPrix+1}" min="${articleVendu.miseAPrix+1}" max="${monProfilUtilisateur.credit}" required /></div>
+						</c:otherwise>
+					</c:choose>
 				<button type="submit" class="btn btn-primary col-3" name ="submit" value="enregistrer">Enchérir</button>
 			</div>
 		</form>

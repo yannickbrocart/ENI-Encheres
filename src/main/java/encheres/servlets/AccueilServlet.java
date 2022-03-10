@@ -1,6 +1,7 @@
 package encheres.servlets;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -47,7 +48,7 @@ public class AccueilServlet extends HttpServlet {
 				}
 			}
 		}
-
+		request.setAttribute("now", LocalDate.now());
 		request.setAttribute("listeArticlesVendus", listeArticlesVendus);
 		request.setAttribute("listeCategories", listeCategories);
 		request.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp").forward(request, response);

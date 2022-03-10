@@ -39,17 +39,27 @@ public class EnchereNonCommenceeServlet extends HttpServlet {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
+		HttpSession session = request.getSession();
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("monProfilUtilisateur");
 		if (articleVendu.getDateDebutEncheres().compareTo(LocalDate.now()) > 0) {
-			try {
-				listeCategories = categorieManager.selectAllCategories();
-			} catch (BusinessException e) {
-				e.printStackTrace();
+			if (utilisateur.getNoUtilisateur() == articleVendu.getVendeur().getNoUtilisateur()) {
+				try {
+					listeCategories = categorieManager.selectAllCategories();
+				} catch (BusinessException e) {
+					e.printStackTrace();
+				}
+				request.setAttribute("listeCategories", listeCategories);
+				request.setAttribute("articleVendu", articleVendu);
+				request.getRequestDispatcher("/WEB-INF/jsp/enchereNonCommencee.jsp").forward(request, response);
+			} else {
+				request.getRequestDispatcher("/").forward(request, response);
 			}
-			request.setAttribute("listeCategories", listeCategories);
-			request.setAttribute("articleVendu", articleVendu);
-			request.getRequestDispatcher("/WEB-INF/jsp/enchereNonCommencee.jsp").forward(request, response);
 		} else {
-			request.getRequestDispatcher("/EncherirServlet").forward(request, response);
+			if (utilisateur.getNoUtilisateur() == articleVendu.getVendeur().getNoUtilisateur()) {
+				request.getRequestDispatcher("/").forward(request, response);
+			} else {
+				request.getRequestDispatcher("/EncherirServlet").forward(request, response);
+			}
 		}
 	}
 

@@ -15,11 +15,12 @@ CREATE TABLE RETRAITS (
 )
 
 CREATE TABLE ENCHERES (
+	no_enchere				INTEGER	IDENTITY(1,1) NOT NULL,
     no_utilisateur			INTEGER NOT NULL,
     no_article				INTEGER NOT NULL,
     date_enchere			DATETIME NOT NULL,
 	montant_enchere			INTEGER NOT NULL,
-	CONSTRAINT enchere_pk PRIMARY KEY (no_utilisateur, no_article)
+	CONSTRAINT enchere_pk PRIMARY KEY (no_enchere)
 )
 
 CREATE TABLE UTILISATEURS (

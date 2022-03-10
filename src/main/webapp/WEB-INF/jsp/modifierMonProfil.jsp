@@ -97,9 +97,15 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-12 col-md-6">
+					<div class="row mb-4">
+						<label class="col-3 col-form-label">Crédit : </label>
+						<div class="col-7 col-form-label"><c:out value="${utilisateur.credit}"></c:out> points</div>
+					</div>
+				</div>
 			<div class="row mt-3 mb-3 justify-content-center gap-5">
 					<button type="submit" class="btn btn-primary col-3" name ="submit" value="enregistrer">Enregistrer</button>
-					<button type="submit" class="btn btn-primary col-3" name ="submit" value="supprimer" formnovalidate>Supprimer mon compte</button>
+					<button type="submit" class="btn btn-danger col-3 " name ="submit" value="supprimer" formnovalidate>Supprimer mon compte</button>
 			</div>
 		</form>
 	</section>
