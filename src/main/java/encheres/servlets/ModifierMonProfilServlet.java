@@ -1,6 +1,7 @@
 package encheres.servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import encheres.BusinessException;
+import encheres.bll.ArticleVenduManager;
+import encheres.bll.RetraitManager;
 import encheres.bll.UtilisateurManager;
+import encheres.bo.ArticleVendu;
 import encheres.bo.Utilisateur;
 import encheres.security.LoginAndPasswordSecurity;
 
@@ -39,6 +43,8 @@ public class ModifierMonProfilServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		RetraitManager retraitManager = new RetraitManager();
+		ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("monProfilUtilisateur");
 		noUtilisateur = utilisateur.getNoUtilisateur();
@@ -51,6 +57,13 @@ public class ModifierMonProfilServlet extends HttpServlet {
 
 		if (request.getParameter("submit").equals("supprimer")) {
 			try {
+				List<ArticleVendu> listeArticlesVendus = articleVenduManager.selectAllArticleVendus();
+				for (ArticleVendu articleVendu : listeArticlesVendus) {
+					if (noUtilisateur == articleVendu.getVendeur().getNoUtilisateur()) {
+						retraitManager.deleteRetrait(articleVendu.getNoArticle());
+						articleVenduManager.deleteArticleVendu(articleVendu.getNoArticle());
+					}
+				}
 				utilisateurManager.deleteUtilisateur(noUtilisateur);
 				request.getRequestDispatcher("/DeconnexionServlet").forward(request, response);
 			} catch (BusinessException e) {

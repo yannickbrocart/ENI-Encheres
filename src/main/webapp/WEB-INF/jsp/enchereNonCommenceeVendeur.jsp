@@ -7,7 +7,7 @@
 <meta charset="ISO-8859-1">
 <link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath() %>/css/encheres.css" rel="stylesheet">
-<title>Enchère non commencée</title>
+<title>Enchère non commencée côté vendeur</title>
 </head>
 <body class="container-fluid col-10">
 	<header class="row mt-3 align-items-center">
@@ -16,7 +16,7 @@
 		</div>
 	</header>
 	<div class="row justify-content-center">
-		<h3 class="mt-5 text-center">Nouvelle vente</h3>
+		<h3 class="mt-5 text-center">Ma nouvelle vente</h3>
 	</div>
 	<div class="row">
 		<div class="col-4">

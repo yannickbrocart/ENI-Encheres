@@ -54,7 +54,7 @@
 			</div>
 			<div class="row mb-4">
 				<label class="col-6 col-form-label">Début de l'enchère : </label>
-				<div class="col-6"><input class="form-control" name="dateDebutEncheres" type="date" required /></div>
+				<div class="col-6"><input class="form-control" name="dateDebutEncheres" type="date" value="${now}" required /></div>
 			</div>
 			<div class="row mb-4">
 				<label class="col-6 col-form-label">Fin de l'enchère : </label>

@@ -35,9 +35,9 @@
 		</div>
 	</header>
 	<section class="row justify-content-center">
-		<h3 class="mt-5 text-center">Liste des enchères</h3>
+		<h2 class="mt-4 text-center">Liste des enchères</h2>
 		<form action="<%=request.getContextPath()%>/AccueilServlet" method="post">
-			<div class="row mt-5">
+			<div class="row mt-4">
 				<h4>Filtres :</h4>
 			</div>
 			<div class="row mt-3 justify-content-center">
@@ -111,8 +111,8 @@
 		</form>
 	</section>
 	
-	<section>
-		<div class="row gap-4 mt-5">
+	<section id="listeEncheres">
+		<div class="row gap-3 mt-4">
 			<c:forEach var="id" items="${listeArticlesVendus}">
 				<div class="col-5 border">
 					<div class="row align-items-center">
@@ -122,13 +122,17 @@
 						<div class="col-8 p-2">
 							<c:choose>
 								<c:when test="${monProfilUtilisateur==null}">
-									<span class="h5"><c:out value="${id.nomArticle}"></c:out></span><br>
+									<span class="h5"><c:out value="${id.nomArticle}"></c:out></span>
+									<c:choose>
+											<c:when test="${id.dateDebutEncheres >= now}"><i class="text-danger fas fa-circle"></i><br></c:when>
+											<c:otherwise><i class="clignote text-success fas fa-circle"></i><br></c:otherwise>
+										</c:choose>
 									<c:choose>
 										<c:when test="${id.prixVente == 0}">
 											Mise à prix : <c:out value="${id.miseAPrix}"></c:out> points<br>
 										</c:when>
 										<c:otherwise>
-											Prix de vente : <c:out value="${id.prixVente}"></c:out> points<br>
+											Dernière enchère : <c:out value="${id.prixVente}"></c:out> points<br>
 										</c:otherwise>
 									</c:choose>
 									<c:choose>
@@ -142,16 +146,19 @@
 									Fin de l'enchère : <c:out value="${id.dateFinEncheres}"></c:out><br><br>
 									Vendeur : <c:out value="${id.vendeur.pseudo}"></c:out>
 								</c:when>
-								
 								<c:otherwise>
 									<a class="h5" href="<%=request.getContextPath()%>/EnchereNonCommenceeServlet?noArticle=${id.noArticle}">
-									<c:out value="${id.nomArticle}"></c:out><br></a>
+										<c:out value="${id.nomArticle }"></c:out></a>
+										<c:choose>
+											<c:when test="${id.dateDebutEncheres >= now}"><i class="text-danger fas fa-circle"></i><br></c:when>
+											<c:otherwise><i class="clignote text-success fas fa-circle"></i><br></c:otherwise>
+										</c:choose>
 									<c:choose>
 										<c:when test="${id.prixVente == 0}">
 											Mise à prix : <c:out value="${id.miseAPrix}"></c:out> points<br>
 										</c:when>
 										<c:otherwise>
-											Prix de vente : <c:out value="${id.prixVente}"></c:out> points<br>
+											Dernière enchère : <c:out value="${id.prixVente}"></c:out> points<br>
 										</c:otherwise>
 									</c:choose>
 									<c:choose>

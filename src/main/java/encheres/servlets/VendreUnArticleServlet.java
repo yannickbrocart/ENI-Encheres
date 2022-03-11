@@ -36,6 +36,7 @@ public class VendreUnArticleServlet extends HttpServlet {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
+		request.setAttribute("now", LocalDate.now());
 		request.setAttribute("listeCategories", listeCategories);
 		request.getRequestDispatcher("/WEB-INF/jsp/vendreUnArticle.jsp").forward(request, response);
 	}

@@ -22,3 +22,15 @@ fieldset {
 .border {
 	border: 1px solid;
 }
+
+.fa-circle {
+    font-size: 1em;
+}
+
+.clignote {
+  color:green;
+  animation: clignote 1.5s linear infinite;
+}
+@keyframes clignote {  
+  50% { opacity: 0; }
+}

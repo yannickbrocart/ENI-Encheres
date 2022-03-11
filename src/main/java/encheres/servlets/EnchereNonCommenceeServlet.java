@@ -42,17 +42,17 @@ public class EnchereNonCommenceeServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("monProfilUtilisateur");
 		if (articleVendu.getDateDebutEncheres().compareTo(LocalDate.now()) > 0) {
+			try {
+				listeCategories = categorieManager.selectAllCategories();
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+			request.setAttribute("listeCategories", listeCategories);
+			request.setAttribute("articleVendu", articleVendu);
 			if (utilisateur.getNoUtilisateur() == articleVendu.getVendeur().getNoUtilisateur()) {
-				try {
-					listeCategories = categorieManager.selectAllCategories();
-				} catch (BusinessException e) {
-					e.printStackTrace();
-				}
-				request.setAttribute("listeCategories", listeCategories);
-				request.setAttribute("articleVendu", articleVendu);
-				request.getRequestDispatcher("/WEB-INF/jsp/enchereNonCommencee.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/jsp/enchereNonCommenceeVendeur.jsp").forward(request, response);
 			} else {
-				request.getRequestDispatcher("/").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/jsp/enchereNonCommenceeAcheteur.jsp").forward(request, response);
 			}
 		} else {
 			if (utilisateur.getNoUtilisateur() == articleVendu.getVendeur().getNoUtilisateur()) {
